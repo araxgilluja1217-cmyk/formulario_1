@@ -1,331 +1,747 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>nivearax</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMP - Impulsora Mexicana de Productividad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      background-color: #f4f7fb;
-      color: #1a1a1a;
-      line-height: 1.5;
-    }
+    <style>
+        /* --- VARIABLES DE IDENTIDAD CROMÁTICA --- */
+        :root {
+            --brand-orange-vibrant: #f25f29; /* Naranja principal (Acción) */
+            --brand-orange-soft: #f28d35;    /* Naranja secundario */
+            --brand-blue-dark: #1d264f;      /* Azul principal (Fondos, Texto) */
+            --brand-blue-bright: #113a8c;    /* Azul secundario (Acentos) */
+            --text-dark: #1d264f;            /* Usamos el azul oscuro para texto */
+            --text-light: #64748b;           /* Gris azulado para subtítulos */
+            --bg-light: #f8fafc;             /* Fondo muy claro */
+            --white: #ffffff;
+        }
 
-    header {
-      background-color: #003399;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
+        /* --- RESET Y BASES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; /* Tipografía más limpia y profesional */
+            color: var(--text-dark); 
+            background-color: var(--bg-light); 
+            overflow-x: hidden; 
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; transition: all 0.3s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; }
 
-    header h1 {
-      margin-bottom: 10px;
-    }
+        /* --- UTILIDADES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+        
+        /* Botones Profesionales */
+        .btn {
+            display: inline-block; padding: 14px 32px; border-radius: 6px; /* Bordes menos redondeados para look pro */
+            font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;
+            transition: all 0.3s ease; cursor: pointer; border: none; text-align: center;
+        }
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--brand-orange-vibrant), var(--brand-orange-soft));
+            color: var(--white); 
+            box-shadow: 0 4px 15px rgba(242, 95, 41, 0.3); 
+        }
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 25px rgba(242, 95, 41, 0.5); 
+        }
+        .btn-outline { 
+            border: 2px solid var(--brand-blue-bright); color: var(--brand-blue-dark); background: transparent; 
+        }
+        .btn-outline:hover { 
+            background: var(--brand-blue-bright); color: var(--white); border-color: transparent;
+        }
 
-    header p {
-      font-size: 16px;
-      opacity: 0.9;
-    }
+        /* Títulos de Sección */
+        .section-title {
+            text-align: center; font-size: 2.5rem; color: var(--brand-blue-dark);
+            margin-bottom: 3.5rem; position: relative;
+        }
+        /* Línea decorativa con el gradiente de la marca */
+        .section-title::after {
+            content: ''; display: block; width: 80px; height: 4px;
+            background: linear-gradient(to right, var(--brand-orange-vibrant), var(--brand-blue-bright));
+            margin: 15px auto 0; border-radius: 2px;
+        }
 
-    section.acerca {
-      background-color: #ffffff;
-      padding: 40px 20px;
-      border-bottom: 4px solid #003399;
-      max-width: 900px;
-      margin: 40px auto 0 auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
+        .tag-pill {
+            display: inline-block; background: rgba(29, 38, 79, 0.08); color: var(--brand-blue-bright);
+            padding: 6px 16px; border-radius: 30px; font-weight: 600; font-size: 0.75rem; margin-bottom: 15px;
+            text-transform: uppercase; letter-spacing: 1.2px;
+        }
 
-    section.acerca h2 {
-      color: #003399;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        /* --- HEADER PROFESIONAL --- */
+        header {
+            background: var(--brand-blue-dark); padding: 18px 0;
+            position: sticky; top: 0; z-index: 1000; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Sombra más sutil */
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: var(--white); font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; }
+        .logo span { color: var(--brand-orange-vibrant); }
+        nav ul { display: flex; gap: 30px; align-items: center; }
+        nav a { color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.95rem; position: relative; }
+        nav a:hover, nav a.active { color: var(--white); }
+        /* Efecto hover sutil en menú */
+        nav a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--brand-orange-vibrant); transition: width 0.3s;
+        }
+        nav a:hover::after { width: 100%; }
+        nav a.btn:hover::after { width: 0; } /* Excluir el botón del efecto */
 
-    section.acerca p {
-      text-align: justify;
-      font-size: 16px;
-      color: #333;
-    }
+        /* --- HERO SECTION (GRADIENTE CORPORATIVO) --- */
+        .hero {
+            height: 88vh; /* Un poco más alto para impacto */
+            /* Uso de los dos azules de la marca para el gradiente */
+            background: linear-gradient(135deg, rgba(29, 38, 79, 0.95), rgba(17, 58, 140, 0.85)), url('https://images.unsplash.com/photo-1497366754035-48c702a7cec3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: var(--white); position: relative;
+        }
+        .hero h1 { font-size: 3.8rem; line-height: 1.1; margin-bottom: 25px; max-width: 900px; }
+        .hero p { font-size: 1.25rem; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.9; font-weight: 300; }
 
-    section.catalogo {
-      background-color: #ffffff;
-      padding: 40px 20px;
-      border-top: 4px solid #003399;
-    }
+        /* --- CARRUSEL CLIENTES (SUTIL) --- */
+        .clients-section { padding: 25px 0; background: var(--white); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .marquee { overflow: hidden; display: flex; white-space: nowrap; }
+        .track { display: flex; animation: scroll 25s linear infinite; }
+        .client-logo {
+            font-size: 1.4rem; color: #cbd5e1; font-weight: 700; margin: 0 40px;
+            display: flex; align-items: center; transition: color 0.3s;
+        }
+        .client-logo:hover { color: var(--brand-blue-bright); }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    section.catalogo h2 {
-      color: #003399;
-      text-align: center;
-      margin-bottom: 30px;
-    }
+        /* --- FRASE INSPIRADORA (IMPACTO NÍTIDO) --- */
+        .quote-section {
+            background: var(--brand-blue-dark); padding: 90px 0; text-align: center; color: var(--white);
+            position: relative; overflow: hidden;
+        }
+        .quote-bg-icon {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 18rem; color: rgba(255,255,255,0.02); z-index: 0;
+        }
+        .quote-content { position: relative; z-index: 1; max-width: 850px; margin: 0 auto; }
+        .quote-text {
+            font-family: 'Montserrat', sans-serif; font-size: 2.4rem; font-weight: 700;
+            line-height: 1.3; margin-bottom: 25px;
+        }
+        /* Acento con el naranja vibrante */
+        .quote-author { font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; color: var(--brand-orange-vibrant); font-weight: 600; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+        /* --- CATEGORÍAS (SPLIT LAYOUT) --- */
+        .categories-section { padding: 100px 0; background: var(--white); }
+        .cat-split { display: flex; align-items: center; gap: 60px; }
+        .cat-text { flex: 0.4; }
+        .cat-text h2 { font-size: 2.5rem; color: var(--brand-blue-dark); margin-bottom: 20px; line-height: 1.2; }
+        .cat-text p { color: var(--text-light); margin-bottom: 30px; font-size: 1.05rem; }
+        
+        .cat-grid { flex: 0.6; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
+        .cat-card {
+            background: var(--white); border-radius: 12px; padding: 35px 25px; text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .cat-card:hover { 
+            border-color: var(--brand-orange-vibrant); 
+            box-shadow: 0 15px 30px rgba(29, 38, 79, 0.1); 
+            transform: translateY(-7px); 
+        }
+        
+        .cat-icon-circle {
+            width: 70px; height: 70px; background: rgba(17, 58, 140, 0.08); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            color: var(--brand-blue-bright); font-size: 1.6rem; transition: all 0.3s;
+        }
+        .cat-card:hover .cat-icon-circle { background: var(--brand-orange-vibrant); color: var(--white); }
+        .cat-card h3 { font-size: 1.15rem; color: var(--brand-blue-dark); margin-bottom: 5px; }
+        .cat-card span { font-size: 0.9rem; color: var(--text-light); }
 
-    .card {
-      border: 1px solid #dcdcdc;
-      border-radius: 10px;
-      padding: 20px;
-      background-color: #f9f9ff;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease;
-    }
 
-    .card:hover {
-      transform: scale(1.03);
-    }
+        /* --- CURSOS (TARJETAS ELEVADAS) --- */
+        /* Usamos un fondo ligeramente azulado para diferenciar secciones */
+        .courses-section { padding: 100px 0; background: #f3f6fa; }
+        .category-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 50px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 12px 28px; border: 1px solid var(--brand-blue-bright); border-radius: 4px;
+            background: transparent; color: var(--brand-blue-bright); font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: 'Inter', sans-serif;
+        }
+        .tab-btn.active, .tab-btn:hover { background: var(--brand-blue-bright); color: var(--white); }
+        
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .course-card {
+            background: var(--white); border-radius: 12px; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04); transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex; flex-direction: column; /* Para alinear el pie */
+        }
+        /* Hover dinámico con el naranja vibrante */
+        .course-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: rgba(242, 95, 41, 0.3); }
+        .course-img { height: 220px; width: 100%; object-fit: cover; }
+        .course-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .course-cat { font-size: 0.75rem; color: var(--brand-orange-vibrant); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .course-info h3 { color: var(--brand-blue-dark); margin-bottom: 12px; font-size: 1.3rem; line-height: 1.3; }
+        .course-info p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 25px; flex-grow: 1; }
+        .course-link { 
+            color: var(--brand-blue-bright); font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; 
+            margin-top: auto; /* Empuja al fondo */
+        }
+        .course-link i { transition: transform 0.3s; }
+        .course-link:hover i { transform: translateX(5px); }
 
-    .card h3 {
-      color: #003399;
-      margin-bottom: 8px;
-    }
 
-    .card p {
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
+        /* --- EXPERTOS (ESTRUCTURA MANTENIDA, COLORES ACTUALIZADOS) --- */
+        .experts-section { padding: 110px 0 60px; background: var(--white); overflow: hidden; }
+        .experts-split { display: flex; align-items: center; gap: 70px; }
+        .experts-content { flex: 1; }
+        .experts-content h2 { font-size: 2.8rem; color: var(--brand-blue-dark); margin-bottom: 20px; line-height: 1.15; }
+        .experts-content p { color: var(--text-light); margin-bottom: 35px; font-size: 1.05rem; }
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; margin-bottom: 35px; }
+        .stat-item { display: flex; align-items: center; gap: 18px; }
+        .stat-icon { 
+            width: 55px; height: 55px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; flex-shrink: 0;
+        }
+        /* Actualización de colores a la nueva paleta */
+        .stat-icon.blue { background: rgba(17, 58, 140, 0.1); color: var(--brand-blue-bright); }
+        .stat-icon.orange { background: rgba(242, 95, 41, 0.1); color: var(--brand-orange-vibrant); }
+        .stat-text h4 { font-size: 1.4rem; color: var(--brand-blue-dark); margin-bottom: 2px; font-weight: 800; }
+        .stat-text span { font-size: 0.9rem; color: var(--text-light); font-weight: 500; }
 
-    .card strong {
-      display: block;
-      color: #000;
-      font-weight: bold;
-    }
-	  
-    .card img {
-      object-fit: contain;
-      max-width: 100%;
-      height: auto;
-    }
+        .experts-visual { flex: 1; position: relative; height: 520px; }
+        .main-img-box {
+            position: absolute; right: 0; top: 0; width: 85%; height: 90%;
+            border-radius: 24px; overflow: hidden; 
+            /* Sombra con tinte azul */
+            box-shadow: 25px 25px 0 rgba(29, 38, 79, 0.05); z-index: 1;
+        }
+        .main-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .overlap-img-box {
+            position: absolute; left: 0; bottom: 0; width: 45%; height: 45%;
+            border-radius: 18px; border: 8px solid var(--white);
+            overflow: hidden; z-index: 2; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            animation: float 6s ease-in-out infinite;
+        }
+        .overlap-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .floating-badge {
+            position: absolute; top: 40px; left: -20px;
+            /* Uso del gradiente naranja para la insignia */
+            background: linear-gradient(135deg, var(--brand-orange-vibrant), var(--brand-orange-soft)); 
+            color: var(--white); padding: 20px 25px; border-radius: 12px; z-index: 3;
+            box-shadow: 0 15px 25px rgba(242, 95, 41, 0.3); text-align: center; animation: float 5s ease-in-out infinite reverse;
+        }
+        .floating-badge h3 { font-size: 2rem; line-height: 1; margin-bottom: 5px; }
+        .floating-badge span { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
 
-    form {
-      background-color: #ffffff;
-      padding: 30px;
-      margin: 40px auto;
-      max-width: 900px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
+        /* --- MÁS CAPACITADORES (GRID LIMPIO) --- */
+        .trainers-grid-section { padding: 60px 0 100px; background: var(--white); }
+        .trainers-title-small { text-align: center; margin-bottom: 45px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+        .trainers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .trainer-card {
+            background: #fff; border-radius: 12px; padding: 35px 25px; text-align: center;
+            border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        /* Hover con el azul brillante */
+        .trainer-card:hover { border-color: var(--brand-blue-bright); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .trainer-img {
+            width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px;
+            border: 3px solid #f0f0f0; transition: border-color 0.3s; pading: 3px; background: var(--white);
+        }
+        .trainer-card:hover .trainer-img { border-color: var(--brand-orange-vibrant); }
+        .trainer-name { font-size: 1.25rem; color: var(--brand-blue-dark); margin-bottom: 5px; }
+        .trainer-role { color: var(--brand-blue-bright); font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; display: block; }
+        .trainer-bio { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
 
-    fieldset {
-      border: 2px solid #003399;
-      border-radius: 10px;
-      padding: 25px 40px;
-      margin-bottom: 20px;
-    }
+        /* --- METODOLOGÍA (Conexión Visual) --- */
+        .methodology { padding: 100px 0; background-color: #f3f6fa; position: relative; }
+        .steps-container { display: flex; justify-content: space-between; position: relative; margin-top: 60px; }
+        /* Línea conectora sutil */
+        .steps-container::before {
+            content: ''; position: absolute; top: 50px; left: 60px; right: 60px;
+            height: 3px; background: rgba(17, 58, 140, 0.15); z-index: 0;
+        }
+        .step-card { width: 23%; text-align: center; position: relative; z-index: 1; padding: 10px; }
+        .step-icon {
+            width: 100px; height: 100px; 
+            background: var(--brand-blue-dark); /* Azul oscuro para el fondo */
+            color: var(--white);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin: 0 auto 25px; 
+            border: 6px solid #f3f6fa; /* Borde del color del fondo */
+            box-shadow: 0 0 0 4px var(--brand-orange-vibrant); /* Anillo exterior vibrante */
+        }
+        .step-card h3 { color: var(--brand-blue-dark); margin-bottom: 10px; font-size: 1.2rem; }
+        .step-card p { color: var(--text-light); font-size: 0.95rem; }
 
-    legend {
-      color: #003399;
-      font-weight: bold;
-    }
+        /* --- BENEFICIOS (FONDO OSCURO) --- */
+        .benefits-section { padding: 100px 0; background: var(--brand-blue-dark); color: var(--white); }
+        .benefits-section .section-title { color: var(--white); }
+        .benefits-section .section-title::after { background: var(--brand-orange-vibrant); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 35px; }
+        .benefit-card {
+            background: rgba(255,255,255,0.05); padding: 35px 25px; border-radius: 12px;
+            text-align: center; transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(5px);
+        }
+        .benefit-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+        .benefit-icon { font-size: 2.8rem; margin-bottom: 25px; color: var(--brand-orange-vibrant); }
+        .benefit-card h3 { margin-bottom: 15px; font-size: 1.3rem; }
+        .benefit-card p { opacity: 0.85; font-size: 1rem; }
+        /* Highlight Card - Naranja Vibrante */
+        .benefit-card.highlight {
+            background: linear-gradient(135deg, var(--brand-orange-vibrant), var(--brand-orange-soft));
+            color: var(--white); border: none;
+            box-shadow: 0 15px 40px rgba(242, 95, 41, 0.3);
+        }
+        .benefit-card.highlight .benefit-icon { color: var(--white); }
+        .benefit-card.highlight:hover { transform: translateY(-10px) scale(1.03); }
 
-    label {
-      display: block;
-      margin: 10px auto 6px auto;
-      max-width: 600px;
-      text-align: left;
-      font-weight: 500;
-    }
+        /* --- OPINIONES (EDITORIAL) --- */
+        .testimonials-section { padding: 100px 0; background: var(--white); }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 50px; margin-top: 60px; }
+        .testimonial-creative-card {
+            background: #fff; border-radius: 16px; padding: 45px 35px 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06); position: relative;
+            border-bottom: 4px solid var(--brand-orange-vibrant); margin-top: 30px; transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .testimonial-creative-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .testimonial-creative-card::before {
+            content: '\201C'; position: absolute; top: 15px; right: 25px;
+            font-size: 7rem; color: rgba(29, 38, 79, 0.04); font-family: serif; line-height: 1;
+        }
+        .user-float-img {
+            width: 85px; height: 85px; border-radius: 50%; object-fit: cover;
+            position: absolute; top: -42.5px; left: 35px;
+            border: 5px solid var(--white); box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .t-stars { color: #FFB400; margin-bottom: 18px; font-size: 0.95rem; margin-top: 15px; }
+        .t-text { font-style: italic; color: var(--text-dark); margin-bottom: 25px; position: relative; z-index: 1; font-size: 1.05rem; line-height: 1.7; }
+        .t-author h4 { color: var(--brand-blue-dark); font-size: 1.1rem; margin-bottom: 3px; }
+        .t-author span { color: var(--text-light); font-size: 0.9rem; font-weight: 500; }
 
-    input, select, textarea {
-      display: block;
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 15px auto;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-size: 15px;
-    }
+        /* --- BLOG --- */
+        .blog-section { padding: 100px 0; background: #f3f6fa; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .blog-card { 
+            background: var(--white); border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .blog-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--brand-blue-bright); }
+        .blog-img { height: 200px; width: 100%; object-fit: cover; }
+        .blog-content { padding: 25px; }
+        .blog-date { color: var(--brand-orange-vibrant); font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; display: block; letter-spacing: 0.5px; }
+        .blog-content h3 { font-size: 1.3rem; margin-bottom: 12px; color: var(--brand-blue-dark); line-height: 1.3; }
+        .blog-content p { color: var(--text-light); margin-bottom: 20px; font-size: 0.95rem; }
 
-    textarea {
-      min-height: 80px;
-      resize: vertical;
-    }
+        /* --- FOOTER --- */
+        footer { background: var(--brand-blue-dark); color: rgba(255,255,255,0.7); padding: 80px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 50px; margin-bottom: 50px; }
+        .footer-col h4 { color: var(--white); margin-bottom: 25px; font-size: 1.2rem; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col a { color: rgba(255,255,255,0.7); font-weight: 500; transition: color 0.3s; }
+        .footer-col a:hover { color: var(--brand-orange-vibrant); }
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: center; font-size: 0.9rem; }
 
-    button {
-      background-color: #003399;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-right: 10px;
-      font-size: 15px;
-      transition: 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0050d8;
-    }
-
-    .footer {
-      background-color: #002c90;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 600px) {
-      fieldset {
-        padding: 20px;
-      }
-
-      input, select, textarea {
-        max-width: 100%;
-      }
-
-      label {
-        max-width: 100%;
-      }
-    }
-  </style>
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+             .hero h1 { font-size: 3rem; }
+             .experts-split, .cat-split { flex-direction: column; text-align: center; gap: 40px; }
+             .experts-visual { width: 100%; height: 450px; }
+             .floating-badge { left: 50%; transform: translateX(-50%); top: -20px; }
+             @keyframes float { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -18px); } }
+             .stats-grid { text-align: left; }
+             .cat-text { margin-bottom: 30px; }
+             .steps-container { flex-direction: column; gap: 40px; align-items: center; }
+             .steps-container::before { display: none; }
+             .step-card { width: 80%; }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.4rem; }
+            .hero p { font-size: 1.1rem; }
+            .quote-text { font-size: 1.8rem; }
+            nav ul { display: none; } /* Menú móvil pendiente */
+            .section-title { font-size: 2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<script>
-  fetch(
-    "https://script.google.com/macros/s/AKfycbzTrBdsnvokupelUqCOm8-1xGGaDOwBJ3FSZDl7HlRkrhtt9fAoz58W8kmV0bRZB4pvQA/exec",
-    {
-      method: "POST",
-      body: "FormDataString",
-      headers: {
-        "Content-Type": "Text/Plain;charset=utf-8"
-      }
-    }
-  );
-</script>
-
 <body>
 
-  <header>
-    <h1>NIVEA <br>
-Cuidado Diario para tu Piel</h1>
-    <p>Explora nuestro catálogo, conoce más sobre nosotros y realiza tu pedido en línea.</p>
-  </header>
+    <header>
+        <div class="container header-content">
+            <div class="logo">IMP<span>.</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio" class="active">Inicio</a></li>
+                    <li><a href="#categorias">Categorías</a></li>
+                    <li><a href="#cursos">Cursos</a></li>
+                    <li><a href="#expertos">Expertos</a></li>
+                    <li><a href="#" class="btn btn-primary"><i class="fas fa-user"></i> Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <section class="acerca">
-    <h2>Acerca de NIVEA</h2>
-    <p>
-      Somos una de las marcas de cuidado de la piel más confiables del mundo, con más de 100 años de experiencia en el desarrollo de productos dermatológicos. 
-      Nuestra misión es ofrecer soluciones innovadoras y accesibles que cuiden, hidraten y protejan la piel de toda la familia.  
-      En NIVEA creemos que el cuidado no es solo un acto físico, sino también emocional: cuidar la piel es cuidar de uno mismo y de quienes más quieres.
-    </p>
-  </section>
+    <section class="hero" id="inicio">
+        <div class="container" data-aos="fade-up" data-aos-duration="1000">
+            <h1>Transformamos el conocimiento de tu empresa en resultados <span style="color:var(--brand-orange-vibrant)">medibles</span>.</h1>
+            <p>Diseño instruccional corporativo y capacitación de alto nivel para potenciar el talento humano.</p>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-primary">Explorar Soluciones</button>
+                <button class="btn btn-outline" style="color:white; border-color:white;">Conocer Más</button>
+            </div>
+        </div>
+    </section>
 
-  <section class="catalogo">
-    <h2>Catálogo de Productos</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>Body Milk 48H</h3>
-        <p>&nbsp;Hidratación profunda con aceite de almendra. Ideal para piel seca.</p>
-        <p> <strong>$165 MXN</strong> </p>
-        <p><strong><img src="media/milk.jpg" width="204" height="200" alt=""/><br>
-        </strong></p>
-      </article>
+    <section class="clients-section">
+        <div class="marquee">
+            <div class="track">
+                <div class="client-logo"><i class="fab fa-google"></i> GOOGLE</div>
+                <div class="client-logo"><i class="fab fa-aws"></i> AMAZON</div>
+                <div class="client-logo"><i class="fab fa-microsoft"></i> MICROSOFT</div>
+                <div class="client-logo"><i class="fab fa-ibm"></i> IBM</div>
+                <div class="client-logo"><i class="fas fa-building"></i> CEMEX</div>
+                <div class="client-logo"><i class="fas fa-industry"></i> FEMSA</div>
+                <div class="client-logo"><i class="fab fa-google"></i> GOOGLE</div>
+                <div class="client-logo"><i class="fab fa-aws"></i> AMAZON</div>
+            </div>
+        </div>
+    </section>
 
-      <article class="card">
-        <h3>NIVEA Soft</h3>
-        <p>Crema ligera multiusos para rostro y cuerpo. Sensación fresca y suave.</p>
-        <p> <strong>$135 MXN</strong> </p>
-        <img src="media/soft.jpg" width="200" height="200" alt=""/>
-        <p>&nbsp;</p>
-        <strong></strong>
-        <p><strong><br>
-        </strong></p>
-      </article>
+    <section class="quote-section">
+        <i class="fas fa-quote-right quote-bg-icon"></i>
+        <div class="container quote-content" data-aos="zoom-in">
+            <p class="quote-text">"La capacitación no es un gasto, es la única inversión que se multiplica exponencialmente cuando se comparte."</p>
+            <span class="quote-author">— Filosofía IMP</span>
+        </div>
+    </section>
 
-      <article class="card">
-        <h3>Labello Original</h3>
-        <p>Protector labial hidratante con brillo natural y suavidad duradera.</p>
-        <p> <strong>$70 MXN</strong></p>
-        <img src="media/labello.jpg" width="200" height="200" alt=""/>
-        <p>&nbsp;</p>
-        <strong></strong>
-        <p><strong><br>
-        </strong></p>
-      </article>
+    <section class="categories-section" id="categorias">
+        <div class="container">
+            <div class="cat-split">
+                <div class="cat-text" data-aos="fade-right">
+                    <span class="tag-pill">Ecosistema de Aprendizaje</span>
+                    <h2>Navega por Áreas de Especialización</h2>
+                    <p>Hemos estructurado nuestro conocimiento en disciplinas clave para cubrir cada necesidad estratégica de tu organización, desde el cumplimiento normativo hasta el desarrollo de liderazgo.</p>
+                    <a href="#" class="btn btn-outline">Ver Todas las Categorías <i class="fas fa-arrow-right" style="margin-left: 8px; font-size: 0.9em;"></i></a>
+                </div>
+                <div class="cat-grid" data-aos="fade-left">
+                    <div class="cat-card">
+                        <div class="cat-icon-circle"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Seguridad Industrial</h3>
+                        <span>19 Cursos Especializados</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="cat-icon-circle"><i class="fas fa-brain"></i></div>
+                        <h3>Soft Skills & Liderazgo</h3>
+                        <span>15 Programas Ejecutivos</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="cat-icon-circle"><i class="fas fa-laptop-code"></i></div>
+                        <h3>Tecnología y Datos</h3>
+                        <span>12 Rutas de Aprendizaje</span>
+                    </div>
+                    <div class="cat-card">
+                        <div class="cat-icon-circle"><i class="fas fa-balance-scale"></i></div>
+                        <h3>Normatividad (NOMs)</h3>
+                        <span>08 Certificaciones</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <article class="card">
-        <h3>NIVEA Men Creme</h3>
-        <p>Crema facial y corporal con rápida absorción, ideal para el cuidado masculino.</p>
-        <p> <strong>$120 MXN</strong> </p>
-        <img src="media/men.jpg" width="200" height="200" alt=""/>
-        <p>&nbsp;</p>
-        <strong></strong>
-        <p><strong><br>
-        </strong></p>
-      </article>
-    </div>
-  </section>
+    <section class="courses-section" id="cursos">
+        <div class="container">
+            <h2 class="section-title">Programas Destacados</h2>
+            
+            <div class="category-tabs">
+                <button class="tab-btn active">Todos los Programas</button>
+                <button class="tab-btn">Seguridad</button>
+                <button class="tab-btn">Liderazgo</button>
+                <button class="tab-btn">Tecnología</button>
+            </div>
 
-  <form method="POST" action="https://script.google.com/macros/s/AKfycbyqxiSNsURjQarjR4O4B8_xW4asQryHejjdkDN47w7r1jAsHR125guzP0hN4G-0sSlmTw/exec">
-    <fieldset>
-      <legend>Información Personal</legend>
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="usuario_nombre" placeholder="Nombre o Nombres" required>
+            <div class="courses-grid">
+                <div class="course-card" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="course-img" alt="Curso Seguridad">
+                    <div class="course-info">
+                        <div class="course-cat">Seguridad Industrial</div>
+                        <h3>Certificación en Normatividad STPS</h3>
+                        <p>Domina las normas oficiales mexicanas esenciales, evita sanciones y garantiza un entorno laboral seguro.</p>
+                        <a href="#" class="course-link">Ver Temario Completo <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
 
-      <label for="apellido_p">Apellido Paterno:</label>
-      <input type="text" id="apellido_p" name="usuario_apellido_p" placeholder="Apellido Paterno" required>
+                <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="course-img" alt="Curso Liderazgo">
+                    <div class="course-info">
+                        <div class="course-cat">Liderazgo Ejecutivo</div>
+                        <h3>Liderazgo 4.0 y Gestión de Equipos</h3>
+                        <p>Desarrolla habilidades gerenciales clave para dirigir equipos de alto rendimiento en la era digital.</p>
+                        <a href="#" class="course-link">Ver Temario Completo <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
 
-      <label for="email">Correo electrónico:</label>
-      <input type="email" id="email" name="usuario_email" placeholder="tucorreo@ejemplo.com" required>
+                <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="course-img" alt="Curso Data">
+                    <div class="course-info">
+                        <div class="course-cat">Tecnología y Datos</div>
+                        <h3>Business Intelligence para Toma de Decisiones</h3>
+                        <p>Aprende a transformar datos crudos en insights estratégicos utilizando herramientas modernas de BI.</p>
+                        <a href="#" class="course-link">Ver Temario Completo <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <label for="tel">Teléfono:</label>
-      <input type="tel" id="tel" name="usuario_tel" placeholder="55 1234 5678" pattern="[0-9\s+]{8,}" required>
-    </fieldset>
+    <section class="experts-section" id="expertos">
+        <div class="container">
+            <div class="experts-split">
+                <div class="experts-content" data-aos="fade-right">
+                    <span class="tag-pill">Claustro de Instructores</span>
+                    <h2>Aprende de los Líderes de la Industria</h2>
+                    <p>Nuestros instructores no solo son académicos; son expertos activos que lideran proyectos en las empresas más importantes del país. Traen la realidad del campo laboral al aula.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon blue"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <div class="stat-text"><h4>50+</h4><span>Instructores Senior</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon orange"><i class="fas fa-play-circle"></i></div>
+                            <div class="stat-text"><h4>1.2k+</h4><span>Lecciones en Video</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon orange"><i class="fas fa-user-graduate"></i></div>
+                            <div class="stat-text"><h4>15k+</h4><span>Profesionales Capacitados</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon blue"><i class="fas fa-star"></i></div>
+                            <div class="stat-text"><h4>4.9/5</h4><span>Calificación Promedio</span></div>
+                        </div>
+                    </div>
+                     <a href="#" class="btn btn-primary">Conocer al Equipo</a>
+                </div>
 
-    <fieldset>
-      <legend>Pedido</legend>
-      <label for="producto">Selecciona tu producto:</label>
-      <select id="producto" name="pedido_item" required>
-        <option value="">Selecciona una opción</option>
-        <option value="body_milk">Body Milk 48H</option>
-        <option value="nivea_soft">NIVEA Soft</option>
-        <option value="labello">Labello Original</option>
-        <option value="nivea_men">NIVEA Men Creme</option>
-      </select>
+                <div class="experts-visual" data-aos="fade-left">
+                    <div class="floating-badge"><h3>+15</h3><span>Años de<br>Trayectoria</span></div>
+                    <div class="main-img-box"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Instructor Principal"></div>
+                    <div class="overlap-img-box"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Instructor Secundario"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" id="cantidad" name="pedido_cantidad" min="1" value="1" required>
+    <section class="trainers-grid-section">
+        <div class="container">
+            <div class="trainers-title-small">Conoce a algunos de nuestros Directores de Programa</div>
+            <div class="trainers-grid">
+                <div class="trainer-card" data-aos="fade-up">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="trainer-img" alt="Roberto">
+                    <h3 class="trainer-name">Ing. Roberto Díaz</h3>
+                    <span class="trainer-role">Director de Seguridad Industrial</span>
+                    <p class="trainer-bio">Auditor Líder ISO 45001 con 18 años de experiencia implementando sistemas de gestión en el sector automotriz y manufactura.</p>
+                </div>
+                <div class="trainer-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="trainer-img" alt="Ana">
+                    <h3 class="trainer-name">Mtra. Ana Torres</h3>
+                    <span class="trainer-role">Head de Desarrollo Organizacional</span>
+                    <p class="trainer-bio">Psicóloga con Maestría en DO. Especialista en transformación cultural, liderazgo adaptativo y comunicación estratégica.</p>
+                </div>
+                <div class="trainer-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://randomuser.me/api/portraits/men/86.jpg" class="trainer-img" alt="Carlos">
+                    <h3 class="trainer-name">Dr. Carlos Ruiz</h3>
+                    <span class="trainer-role">Innovación y Tecnología Educativa</span>
+                    <p class="trainer-bio">Pionero en la implementación de ecosistemas de aprendizaje digital (LMS) y gamificación corporativa en LATAM.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <label for="fecha">Fecha de entrega deseada:</label>
-      <input type="date" id="fecha" name="pedido_fecha" required>
+    <section class="methodology">
+        <div class="container">
+            <h2 class="section-title">Nuestra Metodología Probada</h2>
+            <div class="steps-container">
+                <div class="step-card" data-aos="fade-up">
+                    <div class="step-icon"><i class="fas fa-search-location"></i></div>
+                    <h3>1. Diagnóstico Estratégico</h3>
+                    <p>Identificamos las brechas de competencia reales.</p>
+                </div>
+                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-icon"><i class="fas fa-drafting-compass"></i></div>
+                    <h3>2. Diseño a Medida</h3>
+                    <p>Desarrollamos rutas de aprendizaje personalizadas.</p>
+                </div>
+                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3>3. Implementación Híbrida</h3>
+                    <p>Ejecución flexible (Presencial, Online o Blended).</p>
+                </div>
+                <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3>4. Medición de Impacto</h3>
+                    <p>Evaluamos el ROI y la transferencia al puesto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <label for="hora">Hora preferente:</label>
-      <input type="time" id="hora" name="pedido_hora">
+    <section class="benefits-section" id="beneficios">
+        <div class="container">
+            <h2 class="section-title">¿Por qué elegir IMP Corporate?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Catálogo Integral</h3>
+                    <p>Acceso a más de 54 programas actualizados en áreas críticas de negocio.</p>
+                </div>
+                <div class="benefit-card highlight">
+                    <div class="benefit-icon"><i class="fas fa-history"></i></div>
+                    <h3>Flexibilidad Total</h3>
+                    <p>Modelo "A tu propio ritmo". Capacitación disponible 24/7 desde cualquier dispositivo.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-file-signature"></i></div>
+                    <h3>Certificaciones con Valor</h3>
+                    <p>Constancias con validez oficial (STPS) y reconocimiento curricular.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Comunidad Profesional</h3>
+                    <p>Acceso a foros exclusivos de discusión y networking con expertos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <label for="mensaje">Comentarios o instrucciones:</label>
-      <textarea id="mensaje" name="usuario_mensaje" placeholder="Ejemplo: entrega en recepción o especificar presentación."></textarea>
-    </fieldset>
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">La voz de nuestros socios estratégicos</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-creative-card" data-aos="fade-up">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="user-float-img" alt="Usuario">
+                    <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="t-text">"La profundidad técnica del diplomado en Seguridad Industrial superó nuestras expectativas. El retorno de inversión se vio reflejado en la reducción del 20% en incidentes en planta durante el primer trimestre."</p>
+                    <div class="t-author"><h4>Ing. Carlos Ruiz</h4><span>Gerente de Operaciones, Manufactura Global</span></div>
+                </div>
+                <div class="testimonial-creative-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="user-float-img" alt="Usuario">
+                    <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="t-text">"Implementar la plataforma de IMP para nuestras necesidades de Soft Skills fue un acierto. La interfaz es intuitiva y el contenido es altamente relevante para los retos actuales de liderazgo."</p>
+                    <div class="t-author"><h4>Lic. Laura Mendoza</h4><span>Directora de Capital Humano, Servicios Financieros</span></div>
+                </div>
+                <div class="testimonial-creative-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://randomuser.me/api/portraits/men/85.jpg" class="user-float-img" alt="Usuario">
+                    <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="t-text">"Buscábamos una capacitación en Data Analytics que fuera práctica y no solo teórica. Los instructores de IMP utilizan casos de negocio reales que facilitan la aplicación inmediata."</p>
+                    <div class="t-author"><h4>Mtro. Miguel P.</h4><span>Head of Business Intelligence, Retail</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <fieldset>
-      <legend>Confirmación</legend>
-      <label>
-        <input type="checkbox" name="terminos" required>
-        Confirmo que la información proporcionada es correcta y acepto los términos.
-      </label>
-      <br><br>
-      <div style="text-align:center;">
-        <button type="submit">Enviar Pedido</button>
-        <button type="reset">Limpiar</button>
-      </div>
-    </fieldset>
-  </form>
+    <section class="blog-section" id="blog">
+        <div class="container">
+            <h2 class="section-title">Insights & Tendencias</h2>
+            <div class="blog-grid">
+                <div class="blog-card" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="blog-img" alt="Blog 1">
+                    <div class="blog-content">
+                        <span class="blog-date">ENERO 15, 2026 | TECNOLOGÍA EDUCATIVA</span>
+                        <h3>El futuro del E-learning corporativo: IA y personalización</h3>
+                        <p>Cómo la inteligencia artificial está redefiniendo las rutas de aprendizaje en las organizaciones.</p>
+                        <a href="#" class="btn-link" style="color:var(--brand-blue-bright); font-weight:700;">Leer Artículo Completo <i class="fas fa-arrow-right" style="font-size:0.8em"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="blog-img" alt="Blog 2">
+                    <div class="blog-content">
+                        <span class="blog-date">ENERO 10, 2026 | NORMATIVIDAD</span>
+                        <h3>Actualizaciones críticas en las NOMs de Seguridad para 2026</h3>
+                        <p>Análisis de los cambios recientes y su impacto en el cumplimiento legal de tu empresa.</p>
+                        <a href="#" class="btn-link" style="color:var(--brand-blue-bright); font-weight:700;">Leer Artículo Completo <i class="fas fa-arrow-right" style="font-size:0.8em"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="blog-img" alt="Blog 3">
+                    <div class="blog-content">
+                        <span class="blog-date">ENERO 05, 2026 | LIDERAZGO</span>
+                        <h3>Upskilling y Reskilling: Claves para la retención de talento</h3>
+                        <p>Estrategias efectivas para mantener a tu equipo competitivo ante la brecha de habilidades.</p>
+                        <a href="#" class="btn-link" style="color:var(--brand-blue-bright); font-weight:700;">Leer Artículo Completo <i class="fas fa-arrow-right" style="font-size:0.8em"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="footer">
-    <p>© 2025 NIVEA México — Cuidar la piel es cuidar lo que amas.</p>
-  </div>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="font-size: 2rem;">IMP<span>.</span></div>
+                    <p style="margin-top:20px; line-height: 1.8;">Impulsora Mexicana de Productividad.<br>Elevando el estándar de la capacitación corporativa en México desde 2010.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Soluciones</h4>
+                    <ul>
+                        <li><a href="#">Seguridad Industrial</a></li>
+                        <li><a href="#">Liderazgo y Soft Skills</a></li>
+                        <li><a href="#">Tecnología y Datos</a></li>
+                        <li><a href="#">Consultoría a Medida</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <ul>
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Nuestros Expertos</a></li>
+                        <li><a href="#">Casos de Éxito</a></li>
+                        <li><a href="#">Bolsa de Trabajo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><i class="fas fa-phone-alt" style="margin-right:8px; color:var(--brand-orange-vibrant)"></i> +52 (55) 1234 5678</li>
+                        <li><i class="fas fa-envelope" style="margin-right:8px; color:var(--brand-orange-vibrant)"></i> contacto@imp.mx</li>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right:8px; color:var(--brand-orange-vibrant)"></i> Ciudad de México, CDMX</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Impulsora Mexicana de Productividad. Todos los derechos reservados. | <a href="#" style="text-decoration: underline;">Aviso de Privacidad</a></p>
+            </div>
+        </div>
+    </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ 
+            duration: 800, /* Duración un poco más larga para suavidad */
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+    </script>
 </body>
 </html>
